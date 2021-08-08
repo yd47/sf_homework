@@ -1,0 +1,22 @@
+{
+  "name": "4.2.7",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yd47/sf_homework.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yd47/sf_homework/issues"
+  },
+  "homepage": "https://github.com/yd47/sf_homework#readme",
+  "dependencies": {
+    "jquery": "^3.6.0"
+  }
+}
