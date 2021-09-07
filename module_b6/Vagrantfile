@@ -1,0 +1,26 @@
+$script = <<-'SCRIPT'
+apt-get update
+apt-get install build-essential libreadline-dev zlib1g-dev -y
+wget https://ftp.postgresql.org/pub/source/v8.4.0/postgresql-8.4.0.tar.gz
+tar -xvf postgresql-8.4.0.tar.gz
+rm postgresql-8.4.0.tar.gz
+cd postgresql-8.4.0
+./configure CFLAGS="-Wno-aggressive-loop-optimizations"
+make
+make install 
+adduser --disabled-password --gecos "" postgres
+mkdir /usr/local/pgsql/data && mkdir /var/log/postgres
+chown postgres:postgres /usr/local/pgsql/data && chown postgres:postgres /var/log/postgres
+su postgres -c "/usr/local/pgsql/bin/initdb -D /usr/local/pgsql/data"
+su postgres -c "/usr/local/pgsql/bin/postgres -D /usr/local/pgsql/data >/var/log/postgres/logfile 2>&1 &"
+SCRIPT
+
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/trusty64"
+  config.vm.hostname = "SFlegacyVagrant"
+  config.vm.provision "shell", inline: $script
+  config.vm.provider "virtualbox" do |vb|
+    vb.name = "SFlegacyVagrant"
+  end
+end
