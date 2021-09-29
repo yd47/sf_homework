@@ -19,8 +19,21 @@ SCRIPT
 Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/trusty64"
   config.vm.hostname = "SFlegacyVagrant"
+  config.ssh.insert_key = false 
   config.vm.provision "shell", inline: $script
-  config.vm.provider "virtualbox" do |vb|
-    vb.name = "SFlegacyVagrant"
-  end
+  
+  #Если нужно красивое название в virtualbox:
+  #config.vm.provider "virtualbox" do |vb|
+  #  vb.name = "SFlegacyVagrant"
+  #end
+
+  #После запуска виртуалки из "бокса" vagrant не мог подключиться к ВМ с ошибкой "Warning: Authentication failure. Retrying"
+  #Народ активно разбирается в топике: https://github.com/hashicorp/vagrant/issues/5186 , один из предлагаемых вариантов:
+  #config.ssh.insert_key = false 
+  #Попробовал добавить, но после выключения ВМ не стартует воообще с ошибкой: Код ошибки: E_FAIL (0x80004005)
+  #Различные пляски с бубном не не помогли. Невозможность vagrant'а подключиться к импортированному "боксу" - меньшее из зол.
+  #------------
+  #upd 11.09.2021
+  #Все таки запустил ВМ с config.ssh... с добавлением в virtualbox параметра type=headless, то есть говорим virtualbox'у не пытаться запускать GUI
 end
+
