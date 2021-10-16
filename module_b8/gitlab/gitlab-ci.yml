@@ -8,12 +8,13 @@ unit-test-job:   # This job runs in the test stage.
   stage: test    # It only starts when the job in the build stage completes successfully.
   script:
     - echo "Testing you sql select:"
-    #- cat simpleselect.txt | mysql --user rfamro --host mysql-rfam-public.ebi.ac.uk --port 4497 --database Rfam
+    #запускаем bash скрипт:
     - query="simpleselect.txt"
-    - IFS=$'\n'
+    - IFS=$'\n' #указываем, что считать разделителем в строке
     - for var in $(cat $query); do echo "$var" | mysql --user rfamro --host mysql-rfam-public.ebi.ac.uk --port 4497 --database Rfam; done
   rules:
     - if: '$CI_PIPELINE_SOURCE == "push"'
       changes:
         - simpleselect.txt
       when: on_success
+
