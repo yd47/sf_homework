@@ -1,0 +1,19 @@
+default:
+  image: mysql:latest
+
+stages:          # List of stages for jobs, and their order of execution
+  - test
+
+unit-test-job:   # This job runs in the test stage.
+  stage: test    # It only starts when the job in the build stage completes successfully.
+  script:
+    - echo "Testing you sql select:"
+    #- cat simpleselect.txt | mysql --user rfamro --host mysql-rfam-public.ebi.ac.uk --port 4497 --database Rfam
+    - query="simpleselect.txt"
+    - IFS=$'\n'
+    - for var in $(cat $query); do echo "$var" | mysql --user rfamro --host mysql-rfam-public.ebi.ac.uk --port 4497 --database Rfam; done
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "push"'
+      changes:
+        - simpleselect.txt
+      when: on_success
