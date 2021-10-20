@@ -9,16 +9,22 @@ pipeline {
             }
         }
         stage('sql_1') {
-            when { changeset "module_b8/jenkins/Jenkinsfile.txt" }
+            when { changeset "module_b8/*" }
                 steps {
                     echo 'simpleselect changed'
             }
         }
         stage('sql_2') {
-            when { changeset "*/module_b8/jenkins/Jenkinsfile.txt" }
+            when { changeset "module_b8/**" }
                 steps {
                     echo 'simpleselect changed'
             }
         }           
+        stage('sql_3') {
+            when { changeset "module_b8/***" }
+                steps {
+                    echo 'simpleselect changed'
+            }
+        }     
     }
 }
