@@ -8,7 +8,7 @@ pipeline {
                     echo 'Jenkinsfile changed'
             }
         }
-        stage('sql_1') {
+        stage('sql') {
             when { changeset "**/simpleselect.txt" }
                 steps {
                     echo 'simpleselect changed'
