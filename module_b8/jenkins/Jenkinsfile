@@ -9,13 +9,13 @@ pipeline {
             }
         }
         stage('sql_1') {
-            when { changeset "*/simpleselect*" }
+            when { changeset "module_b8/jenkins/Jenkinsfile.txt" }
                 steps {
                     echo 'simpleselect changed'
             }
         }
         stage('sql_2') {
-            when { changeset "*/module_b8/**" }
+            when { changeset "*/module_b8/jenkins/Jenkinsfile.txt" }
                 steps {
                     echo 'simpleselect changed'
             }
