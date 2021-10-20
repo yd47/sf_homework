@@ -3,7 +3,7 @@ pipeline {
 
     stages {
         stage('jenk') {
-            when { changeset "*/Jenkinsfile" }
+            when { changeset "**/Jenkinsfile" }
                 steps {
                     echo 'Jenkinsfile changed'
             }
@@ -14,17 +14,5 @@ pipeline {
                     echo 'simpleselect changed'
             }
         }
-        stage('sql_2') {
-            when { changeset "module_b8/**" }
-                steps {
-                    echo 'simpleselect changed'
-            }
-        }           
-        stage('sql_3') {
-            when { changeset "**/simpleselect*" }
-                steps {
-                    echo 'simpleselect changed'
-            }
-        }     
     }
 }
