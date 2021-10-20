@@ -15,7 +15,7 @@ pipeline {
             }
         }
         stage('sql_2') {
-            when { changeset "*/simpleselect.txt" }
+            when { changeset "*/module_b8/**" }
                 steps {
                     echo 'simpleselect changed'
             }
