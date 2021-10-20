@@ -12,8 +12,13 @@ pipeline {
             when { changeset "**/simpleselect.txt" }
                 steps {
                     echo 'simpleselect changed'
-                    sh 'query="simpleselect.txt"'
-                    sh 'echo $query'
+                    sh 'wget https://github.com/yd47/sf_homework/raw/master/module_b8/jenkins/simpleselect.txt'
+                    sh '''#!/bin/bash
+                            query="simpleselect.txt"
+                            IFS=$'\n'
+                            for var in $(cat $query); do echo "$var" | mysql --user rfamro --host mysql-rfam-public.ebi.ac.uk --port 4497 --database Rfam; done
+                    '''
+                    sh 'rm simpleselect.txt'
             }
         }
     }
