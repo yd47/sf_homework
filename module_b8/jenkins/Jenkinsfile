@@ -12,6 +12,8 @@ pipeline {
             when { changeset "**/simpleselect.txt" }
                 steps {
                     echo 'simpleselect changed'
+                    sh 'query="simpleselect.txt"'
+                    sh 'echo $query'
             }
         }
     }
