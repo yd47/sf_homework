@@ -1,17 +1,24 @@
 pipeline {
-   agent any
-   stages {
-    stage('sql'){
-      when { changeset "*/simpleselect*"}
-        steps {
-            echo 'simpleselect changed'
-        }
-    }
+    agent any
 
-    stage('Jenkins'){
-        when { changeset "*/Jenkinsfile"}
-         steps {
-             echo 'Jenkinsfile changed'
-         }
+    stages {
+        stage('jenk') {
+            when { changeset "*/Jenkinsfile" }
+                steps {
+                    echo 'Jenkinsfile changed'
+            }
+        }
+        stage('sql_1') {
+            when { changeset "*/simpleselect*" }
+                steps {
+                    echo 'simpleselect changed'
+            }
+        }
+        stage('sql_2') {
+            when { changeset "*/simpleselect.txt" }
+                steps {
+                    echo 'simpleselect changed'
+            }
+        }           
     }
 }
