@@ -2,9 +2,16 @@ pipeline {
     agent any
 
     stages {
-        stage('Hello') {
-            steps {
-                echo 'Hello World'
+        stage('jenk') {
+            when { changeset "Jenkinsfile" }
+                steps {
+                    echo 'Jenkinsfile changed'
+            }
+        }
+        stage('sql') {
+            when { changeset "simpleselect.txt" }
+                steps {
+                    echo 'simpleselect changed'
             }
         }
     }
