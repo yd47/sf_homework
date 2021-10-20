@@ -9,7 +9,7 @@ pipeline {
             }
         }
         stage('sql_1') {
-            when { changeset "module_b8/*" }
+            when { changeset "**/simpleselect.txt" }
                 steps {
                     echo 'simpleselect changed'
             }
@@ -21,7 +21,7 @@ pipeline {
             }
         }           
         stage('sql_3') {
-            when { changeset "module_b8/***" }
+            when { changeset "**/simpleselect*" }
                 steps {
                     echo 'simpleselect changed'
             }
