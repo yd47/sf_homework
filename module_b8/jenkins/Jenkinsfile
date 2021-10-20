@@ -9,7 +9,7 @@ pipeline {
             }
         }
         stage('sql') {
-            when { changeset "simpleselect.txt" }
+            when { changeset "*/simpleselect.txt" }
                 steps {
                     echo 'simpleselect changed'
             }
