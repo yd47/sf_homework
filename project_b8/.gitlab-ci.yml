@@ -1,0 +1,29 @@
+default:
+  image: nginx:alpine
+
+stages:          # List of stages for jobs, and their order of execution
+  - test
+
+unit-test-job:   # This job runs in the test stage.
+  stage: test    # It only starts when the job in the build stage completes successfully.
+  script:
+    - echo "Testing you index.html"
+    - CHECKSITE='0'
+    - CHECKMD5='0'
+    - docker run --name mynginx4 -p 48901:80 -d nginx:alpine
+    - docker cp index.html mynginx4:/usr/share/nginx/html/
+    #Проверяем, что страница существует. Здесь намерено неправильная страница:
+    - if [ $(curl -f -LI 0.0.0.0:48901/index1.html -o /dev/null -w '%{http_code}\n' -s) == "200" ]; then echo 'OK'; else CHECKSITE='1'; fi
+    #Проверяем md5:
+    - if [ $(curl 0.0.0.0:48901/index.html -s | md5sum | awk '{print $1}') == $(md5sum index.html | awk '{print $1}') ]; then echo 'OK'; else CHECKMD5= 1; fi
+    #Отправляем информацию о статусе деплоя:
+    - for i in CHECKSITE CHECKMD5; do if [ ${!i} == 1 ]; then sh telegram_message.sh "❌ due to $i is not valid"; exit 1; else echo "everything is okay" ; fi; done
+    - sh telegram_message.sh ✅
+  after_script:
+    #Удаляем контейнер. after_script выполниться, даже если script завершился с exit 1
+    - docker rm -f mynginx4
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "push"'
+      changes:
+        - index.html
+
