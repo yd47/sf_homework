@@ -5,4 +5,5 @@
 
 #Размер образа:
 #REPOSITORY                  TAG               IMAGE ID       CREATED         SIZE
+
 #img_project9                latest            eea0293fafa6   9 minutes ago   121MB
