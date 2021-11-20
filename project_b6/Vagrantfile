@@ -1,0 +1,8 @@
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/bionic64"
+  config.vm.hostname = "shchProject6"
+  config.ssh.insert_key = false
+  config.vm.provision "file", source: "./emptyfile.txt", destination: "/home/vagrant/emptyfile.txt"
+  config.vm.synced_folder "./forwardfolder", "/home/vagrant/folder"
+  config.vm.provision "shell", path: "script.sh"
+end
