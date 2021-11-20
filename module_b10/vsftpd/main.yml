@@ -1,0 +1,11 @@
+---
+# tasks file for hw
+- name: install package
+  apt:
+    name: vsftpd
+    state: latest
+  
+- name: start service
+  systemd:
+    name: vsftpd
+    state: started

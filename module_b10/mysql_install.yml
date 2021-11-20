@@ -1,0 +1,22 @@
+---
+- hosts: localhost 
+  gather_facts: true 
+  become: yes
+  tasks: 
+      - name: "Создаю временную директорию"
+        file:
+          state: directory
+          path: /home/ansible
+      - name: "Копирую APT Repository на хост"
+        copy:
+          src: ./mysql-apt-config_0.8.20-1_all.deb
+          dest: /home/ansible/
+      - name: "Устанавливаю пакеты"
+        #можно было сделать так: deb: https://dev.mysql.com/get/mysql-apt-config_0.8.20-1_all.deb
+        apt:
+          deb: /home/ansible/mysql-apt-config_0.8.20-1_all.deb
+      - name: "Устанавливаю mysql"
+        apt:
+          update_cache: yes
+          name: mysql-server
+          state: latest

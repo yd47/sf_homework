@@ -1,0 +1,38 @@
+---
+- hosts: localhost 
+  gather_facts: true 
+  become: yes
+  tasks: 
+      - name: "Установим рекомендуемые пакеты"
+        apt:
+          name: "{{ packages }}"
+          update_cache: yes
+          state: latest
+        vars:
+          packages:
+          - ca-certificates
+          - curl
+          - gnupg
+          - lsb-release
+      - name: "Добавим gpg ключ"
+        apt_key:
+          url: https://download.docker.com/linux/debian/gpg
+      - name: "Добавим репу в sources.list.d"
+        apt_repository:
+          repo: deb https://download.docker.com/linux/debian buster stable
+      - name: "Установим докер"
+        apt:
+          update_cache: yes
+          name: "{{ packages_1 }}"
+          state: latest
+        vars:
+          packages_1:
+            - docker-ce
+            - docker-ce-cli
+            - containerd.io
+      - name: "Hello Docker"
+        docker_container:
+          name: hello-world
+          image: hello-world
+          state: started
+

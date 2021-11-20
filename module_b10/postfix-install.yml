@@ -1,0 +1,24 @@
+---
+- hosts: localhost 
+  gather_facts: true 
+  become: yes
+  tasks: 
+      - name: "Install and run postfix"
+        apt:
+          name: postfix
+          state: latest
+        notify:
+          - Start service
+        tags: "init postfix"
+        
+      - name: "Uninstall postfix"
+        apt:
+          name: postfix
+          state: absent
+        tags: "drop postfix"
+      
+  handlers:
+      - name: Start service
+        systemd:
+          name: postfix
+          state: started 

@@ -1,0 +1,27 @@
+---
+- hosts: shch 
+  gather_facts: true 
+  become: yes
+  tasks: 
+      - name: "Create user"
+        user:
+          name: user1
+          comment: test user
+      - name: "Add ssh key"
+        authorized_key:
+          user: user1
+          state: present
+          key: "{{ lookup('file', '/home/shcherbakov/ansible/id_rsa.pub') }}"
+          #По заданию нужно было складывать ssh-key сюда:
+          path: /home/user1/.ssh/id_rsa.pub
+          #но тогда авторизация по ключу не работает, потому что ключ должен лежать в authorized_keys
+
+#-- Запуск плейбука нужно выполнять с ключем:
+#--  ansible-playbook --ask-vault-pass user_create.yml
+#
+#-- Файл id_rsa.pub зашифрован ansible-vault encrypt:
+#-- cat id_rsa.pub 
+#$ANSIBLE_VAULT;1.1;AES256
+#30323134396532653161303836636239663231636538376233623363646637343237633434363136
+#6332323166336337616562393831666266323532363638660a333864306536633530613562376565
+#65633762316439663630326266386262383535313237336666333533613764336634613732336235
