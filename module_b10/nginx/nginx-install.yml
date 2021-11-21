@@ -1,0 +1,38 @@
+---
+- hosts: localhost 
+  gather_facts: true 
+  become: yes
+  tasks: 
+      - name: "Устанавливаю пакеты"
+        apt:
+          name: "{{ packages }}"
+          update_cache: yes
+          state: latest
+        vars:
+          packages:
+          - nginx
+          - php-fpm
+          - php-cgi
+
+      - name: "Перекидываю конфигурационные файлы nginx"
+        copy:  
+          src: /home/debian/nginx+php/phpfpm.conf
+          dest: /etc/nginx/sites-available/phpfpm.conf
+          
+      - name: "Перекидываю конфигурационные сайта"
+        copy:
+          src: /home/debian/nginx+php/index.php
+          dest: /opt/nginx/ansible/
+
+      - name: "Добавляю симлинк"
+        file:
+          src: /etc/nginx/sites-available/phpfpm.conf
+          dest: /etc/nginx/sites-enabled/default
+          owner: root
+          group: root
+          state: link
+
+      - name: "Перечитываю конфиг nginx"
+        systemd:
+          name: nginx
+          state: reloaded
