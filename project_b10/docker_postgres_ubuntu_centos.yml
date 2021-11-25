@@ -1,0 +1,120 @@
+---
+- name: "Install Docker on group App"
+  gather_facts: true
+  become: yes
+  hosts: app
+  tasks:
+      - name: "Work with Ubuntu"
+        block:
+          - name: "add gpg key"
+            apt_key:
+              url: https://download.docker.com/linux/ubuntu/gpg
+              keyring: /usr/share/keyrings/docker-archive-keyring.gpg
+              state: present
+
+          - name: "add repo to sources.list.d"
+            apt_repository:
+              repo: deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu   focal stable
+
+          - name: "docker install"   
+            apt:
+              update_cache: yes
+              name: 
+                - python3-pip
+                - docker-ce 
+                - docker-ce-cli 
+                - containerd.io
+
+          - name: "pip3 docker install"
+            pip:
+              name: docker
+              executable: pip3
+
+          - name: "Hello Docker"
+            docker_container:
+              name: hello-world
+              image: hello-world
+              state: started          
+  
+        when: ansible_facts['distribution']=="Ubuntu"
+
+      - name: "Work with CentOS"
+        block: 
+          - name: "add repository"
+            yum_repository:
+              name: docker-ce.repo
+              description: Docker CE Stable
+              baseurl: https://download.docker.com/linux/centos/$releasever/$basearch/stable 
+              enabled: yes
+              gpgcheck: yes
+              gpgkey: https://download.docker.com/linux/centos/gpg
+
+          - name: "docker install"
+            yum:
+              update_cache: yes
+              name: 
+                - python3-pip
+                - docker-ce
+                - docker-ce-cli
+                - containerd.io
+
+          - name: "pip3 docker install"
+            pip:
+              name: docker
+              executable: pip3
+
+          - name: "Start service"
+            systemd:
+              state: started
+              name: docker
+          
+          - name: "Hello Docker"
+            docker_container:
+              name: hello-world
+              image: hello-world
+              state: started
+
+        when: ansible_facts['distribution']=="CentOS" 
+
+#####
+#Install postgresql
+#####
+
+- name: "Install postgresql on group database"
+  gather_facts: true
+  become: yes
+  hosts: database
+  tasks:
+      - name: "Work with Ubuntu"
+        block:
+          - name: "add gpg key"
+            apt_key:
+              url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
+
+          - name: "add repo to sources.list.d"
+            apt_repository:
+              repo: deb http://apt.postgresql.org/pub/repos/apt focal-pgdg main
+              filename: pgdg.list
+              state: present
+          
+          - name: "install PostgreSQL"
+            apt:
+              update_cache: yes
+              name: "{{ postver }}"
+
+          - name: "change data dir"          
+            lineinfile:
+              path: /etc/postgresql/12/main/postgresql.conf
+              state: present
+              regexp: "^(data_directory.*main')"
+              line: "data_directory = '{{ datadir }}'          # use data in another directory"
+            notify: 
+              - Restart service 
+              
+  handlers:
+      - name: Restart service
+        systemd: 
+          name: postgresql
+          state: reloaded
+
+        when: ansible_facts['distribution']=="Ubuntu"

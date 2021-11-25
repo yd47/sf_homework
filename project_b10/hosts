@@ -1,0 +1,13 @@
+[app]
+51.250.17.255 ansible_user=ansible ansible_ssh_private_key_file=/home/ansible/.ssh/id_ed25519 ansible_python_interpreter=/usr/bin/python3
+51.250.19.32 ansible_user=ansible ansible_ssh_private_key_file=/home/ansible/.ssh/id_ed25519 ansible_python_interpreter=/usr/bin/python3
+
+[database]
+51.250.28.102 ansible_user=ansible ansible_ssh_private_key_file=/home/ansible/.ssh/id_ed25519 ansible_python_interpreter=/usr/bin/python3
+
+[database:vars]
+postver=postgresql-12
+datadir='/var/opt/postgresql/12/main'
+
+[web]
+51.250.28.102 ansible_user=ansible ansible_ssh_private_key_file=/home/ansible/.ssh/id_ed25519 ansible_python_interpreter=/usr/bin/python3
