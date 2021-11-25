@@ -17,9 +17,11 @@
       - name: "Добавим gpg ключ"
         apt_key:
           url: https://download.docker.com/linux/debian/gpg
+          keyring: /usr/share/keyrings/docker-archive-keyring.gpg
       - name: "Добавим репу в sources.list.d"
         apt_repository:
-          repo: deb https://download.docker.com/linux/debian buster stable
+          #Репа убунты!
+          repo: deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu   focal stable
       - name: "Установим докер"
         apt:
           update_cache: yes
