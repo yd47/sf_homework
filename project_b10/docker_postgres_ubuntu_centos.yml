@@ -100,21 +100,35 @@
           - name: "install PostgreSQL"
             apt:
               update_cache: yes
-              name: "{{ postver }}"
+              name: postgresql-{{ postver }}
+
+          - name: "create custom dir"
+            file: 
+              path: '{{ datadir }}'
+              state: directory
+              owner: postgres
+              group: postgres
 
           - name: "change data dir"          
             lineinfile:
-              path: /etc/postgresql/12/main/postgresql.conf
+              path: /etc/postgresql/{{ postver }}/main/postgresql.conf
               state: present
               regexp: "^(data_directory.*main')"
               line: "data_directory = '{{ datadir }}'          # use data in another directory"
             notify: 
+              - Re-init initdb
               - Restart service 
               
-  handlers:
-      - name: Restart service
-        systemd: 
-          name: postgresql
-          state: reloaded
-
         when: ansible_facts['distribution']=="Ubuntu"
+
+#####
+#handlers
+#####
+
+  handlers:
+      - name: Re-init initdb
+        command: su postgres -c '/usr/lib/postgresql/12/bin/initdb -D {{ datadir }}/'
+      - name: Restart service
+        systemd:
+          name: postgresql
+          state: restarted
