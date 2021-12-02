@@ -1,0 +1,199 @@
+{
+  "_index": "filebeat-7.15.2-2021.12.02-000001",
+  "_type": "_doc",
+  "_id": "k2gsfH0BWxGRVfIOXUb3",
+  "_version": 1,
+  "_score": 1,
+  "_source": {
+    "agent": {
+      "hostname": "projectb10",
+      "name": "projectb10",
+      "id": "74ba1274-3aa9-441a-a10e-10a923c33c9d",
+      "type": "filebeat",
+      "ephemeral_id": "55976f03-512a-4ca2-a10b-7f20c6db5509",
+      "version": "7.15.2"
+    },
+    "log": {
+      "file": {
+        "path": "/var/log/awesome.log"
+      },
+      "offset": 2754
+    },
+    "fileset": {
+      "name": "log"
+    },
+    "message": "Dec  2 17:23:40 server1 awesome: {\"time\":\"2021-12-02 17:23:40\",\"double val\":\"4\"}",
+    "error": {
+      "message": "Provided Grok expressions do not match field value: [Dec  2 17:23:40 server1 awesome: {\\\"time\\\":\\\"2021-12-02 17:23:40\\\",\\\"double val\\\":\\\"4\\\"}]"
+    },
+    "cloud": {
+      "availability_zone": "ru-central1-b",
+      "image": {},
+      "instance": {
+        "id": "epdogkbvko7efv2bhpa7"
+      },
+      "provider": "aws",
+      "service": {
+        "name": "EC2"
+      },
+      "machine": {},
+      "region": "ru-central1",
+      "account": {}
+    },
+    "input": {
+      "type": "log"
+    },
+    "@timestamp": "2021-12-02T17:23:41.197Z",
+    "ecs": {
+      "version": "1.11.0"
+    },
+    "service": {
+      "type": "auditd"
+    },
+    "host": {
+      "hostname": "projectb10",
+      "os": {
+        "kernel": "4.19.0-18-amd64",
+        "codename": "buster",
+        "name": "Debian GNU/Linux",
+        "type": "linux",
+        "family": "debian",
+        "version": "10 (buster)",
+        "platform": "debian"
+      },
+      "ip": [
+        "10.129.0.17",
+        "fe80::d20d:18ff:fe85:17fa"
+      ],
+      "containerized": false,
+      "name": "projectb10",
+      "id": "2300000765b88517fa60ee7fc4b8e547",
+      "mac": [
+        "d0:0d:18:85:17:fa"
+      ],
+      "architecture": "x86_64"
+    },
+    "event": {
+      "ingested": "2021-12-02T17:23:42.198717473Z",
+      "module": "auditd",
+      "dataset": "auditd.log"
+    }
+  },
+  "fields": {
+    "host.os.name.text": [
+      "Debian GNU/Linux"
+    ],
+    "host.hostname": [
+      "projectb10"
+    ],
+    "host.mac": [
+      "d0:0d:18:85:17:fa"
+    ],
+    "cloud.availability_zone": [
+      "ru-central1-b"
+    ],
+    "service.type": [
+      "auditd"
+    ],
+    "host.ip": [
+      "10.129.0.17",
+      "fe80::d20d:18ff:fe85:17fa"
+    ],
+    "cloud.instance.id": [
+      "epdogkbvko7efv2bhpa7"
+    ],
+    "agent.type": [
+      "filebeat"
+    ],
+    "event.module": [
+      "auditd"
+    ],
+    "host.os.version": [
+      "10 (buster)"
+    ],
+    "host.os.kernel": [
+      "4.19.0-18-amd64"
+    ],
+    "host.os.name": [
+      "Debian GNU/Linux"
+    ],
+    "agent.name": [
+      "projectb10"
+    ],
+    "host.name": [
+      "projectb10"
+    ],
+    "host.id": [
+      "2300000765b88517fa60ee7fc4b8e547"
+    ],
+    "host.os.type": [
+      "linux"
+    ],
+    "cloud.region": [
+      "ru-central1"
+    ],
+    "fileset.name": [
+      "log"
+    ],
+    "host.os.codename": [
+      "buster"
+    ],
+    "input.type": [
+      "log"
+    ],
+    "log.offset": [
+      2754
+    ],
+    "agent.hostname": [
+      "projectb10"
+    ],
+    "message": [
+      "Dec  2 17:23:40 server1 awesome: {\"time\":\"2021-12-02 17:23:40\",\"double val\":\"4\"}"
+    ],
+    "host.architecture": [
+      "x86_64"
+    ],
+    "event.ingested": [
+      "2021-12-02T17:23:42.198Z"
+    ],
+    "cloud.provider": [
+      "aws"
+    ],
+    "@timestamp": [
+      "2021-12-02T17:23:41.197Z"
+    ],
+    "agent.id": [
+      "74ba1274-3aa9-441a-a10e-10a923c33c9d"
+    ],
+    "cloud.service.name": [
+      "EC2"
+    ],
+    "ecs.version": [
+      "1.11.0"
+    ],
+    "host.containerized": [
+      false
+    ],
+    "host.os.platform": [
+      "debian"
+    ],
+    "error.message": [
+      "Provided Grok expressions do not match field value: [Dec  2 17:23:40 server1 awesome: {\\\"time\\\":\\\"2021-12-02 17:23:40\\\",\\\"double val\\\":\\\"4\\\"}]"
+    ],
+    "log.file.path": [
+      "/var/log/awesome.log"
+    ],
+    "agent.ephemeral_id": [
+      "55976f03-512a-4ca2-a10b-7f20c6db5509"
+    ],
+    "agent.version": [
+      "7.15.2"
+    ],
+    "host.os.family": [
+      "debian"
+    ],
+    "event.dataset": [
+      "auditd.log"
+    ]
+  }
+}

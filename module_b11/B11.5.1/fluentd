@@ -1,0 +1,23 @@
+<source>
+  @type http
+  port 8888
+</source>
+ 
+<filter test1>
+  @type grep
+  <regexp>
+    key source 
+    pattern /^.*$/
+  </regexp>
+
+  <exclude>
+    key source
+    pattern /^localhost$/
+  </exclude>
+
+</filter>
+
+<match test1>
+  @type file
+  path /var/log/fluent/access
+</match>
