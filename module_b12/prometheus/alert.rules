@@ -1,0 +1,25 @@
+groups: 
+- name: check lms and uptime
+  rules:
+  - alert: Processing_time_for_LMS
+    expr: probe_http_duration_seconds{job="blackbox-lms.skillfactory.ru", phase="processing"} > 5
+    for: 0m
+    labels:
+      severity: critical
+    annotations:
+      summary: "website lms.skillfactory.ru processing time is longer than 5s = {{ humanize $value }}"
+
+  - alert: Status_code_of_LMS
+    expr: probe_http_status_code{job="blackbox-lms.skillfactory.ru"} != 200
+    for: 0m
+    labels:
+      severity: warning
+    annotations:
+      summary: "status code of lms.skillfactory.ru is not OK = {{ $value }}"
+
+  - alert: check_uptime
+    expr: ((node_time_seconds - node_boot_time_seconds) / 3600) < 1
+    for: 0m
+    labels:
+    annotations:
+      summary: "The guest os rebooted. Uptime is: {{ humanize $value }}"
