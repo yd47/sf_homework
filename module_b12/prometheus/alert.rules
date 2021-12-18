@@ -21,5 +21,6 @@ groups:
     expr: ((node_time_seconds - node_boot_time_seconds) / 3600) < 1
     for: 0m
     labels:
+      severity: critical
     annotations:
       summary: "The guest os rebooted. Uptime is: {{ humanize $value }}"
