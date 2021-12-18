@@ -18,7 +18,7 @@ groups:
       summary: "status code of lms.skillfactory.ru is not OK = {{ $value }}"
 
   - alert: check_uptime
-    expr: ((node_time_seconds - node_boot_time_seconds) / 3600) < 1
+    expr: ((node_time_seconds - node_boot_time_seconds) / 60) < 10
     for: 0m
     labels:
       severity: critical
